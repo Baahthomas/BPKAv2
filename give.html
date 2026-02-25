@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give | Kingdom Bearers Global</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #6c5ce7;
+            --deep-purple: #4834d4;
+            --gold-accent: #c5a059;
+            --gold-dark: #9c7a38;
+            --black-bg: #000000;
+            --white: #ffffff;
+            --light-gray: #f8f8f8;
+            --teal-accent: #00a896;
+            --teal-dark: #0d9488;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #000000;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .header-main {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 5%;
+            min-height: 70px;
+            gap: 20px;
+        }
+
+        .header-nav-left,
+        .header-nav-right {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .header-nav-left { justify-content: flex-start; }
+        .header-nav-right { justify-content: flex-end; }
+
+        .header-nav-left li a,
+        .header-nav-right li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 26px 18px;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .header-nav-left li a::after,
+        .header-nav-right li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+            right: 18px;
+            height: 2px;
+            background: var(--gold-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .header-nav-left li a:hover,
+        .header-nav-right li a:hover { color: #ffffff; }
+        .header-nav-left li a:hover::after,
+        .header-nav-right li a:hover::after { transform: scaleX(1); }
+
+        .header-nav-left li a.active,
+        .header-nav-right li a.active { color: var(--gold-accent); }
+
+        .header-logo-center {
+            text-align: center;
+            padding: 12px 20px;
+            border-left: 1px solid rgba(197,160,89,0.2);
+            border-right: 1px solid rgba(197,160,89,0.2);
+        }
+
+        .header-logo-emblem {
+            display: inline-block;
+            width: 42px;
+            height: 42px;
+            border: 1.5px solid var(--gold-accent);
+            transform: rotate(45deg);
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .header-logo-emblem::before {
+            content: '✦';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            color: var(--gold-accent);
+            font-size: 16px;
+        }
+
+        .header-logo-name {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .header-icon-btn {
+            width: 34px; height: 34px;
+            border: 1px solid rgba(197,160,89,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        .header-icon-btn:hover {
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+            background: rgba(197,160,89,0.1);
+        }
+
+        @media (max-width: 900px) {
+            .header-main { grid-template-columns: 1fr auto; }
+            .header-nav-left { display: none; }
+            .header-nav-right { display: none; }
+            .header-logo-center { border: none; }
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal-up    { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+        .reveal-left  { opacity: 0; transform: translateX(-100px); transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1); }
+        .reveal-right { opacity: 0; transform: translateX(100px);  transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1); }
+        .reveal-fade  { opacity: 0; transition: opacity 1.2s ease-out; }
+        .is-visible   { opacity: 1; transform: translate(0); }
+
+        /* ===== HERO — Geo-Ring Pattern (same as contact page) ===== */
+        .give-hero {
+            position: relative;
+            height: 60vh;
+            min-height: 420px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .hero-geo {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .geo-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        .geo-ring-1 { width: 700px; height: 700px; top: -250px; left: -180px; }
+        .geo-ring-2 { width: 500px; height: 500px; top: -150px; left: -80px; border-color: rgba(108, 92, 231, 0.1); }
+        .geo-ring-3 { width: 340px; height: 340px; bottom: -140px; right: -100px; border-color: rgba(197, 160, 89, 0.12); }
+        .geo-ring-4 { width: 220px; height: 220px; top: -60px; right: 15%; border-color: rgba(108,92,231,0.08); }
+
+        .geo-stripe {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(197,160,89,0.18), transparent);
+            transform: rotate(20deg) translateX(-50%);
+        }
+        .geo-stripe-1 { left: 22%; }
+        .geo-stripe-2 { left: 88%; opacity: 0.5; }
+
+        .give-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold-accent);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .give-hero-content h1 {
+            font-size: 36px;
+            font-weight: 500;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .give-hero-content h1 em {
+            font-style: normal;
+            color: var(--primary-purple);
+        }
+
+        .hero-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 0 auto 28px;
+        }
+        .hero-divider-line { width: 60px; height: 1px; background: rgba(197,160,89,0.5); }
+        .hero-divider-diamond { width: 8px; height: 8px; background: var(--gold-accent); transform: rotate(45deg); }
+
+        .give-hero-content p {
+            font-size: 16px;
+            font-weight: 400;
+            color: #555;
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            background: var(--white);
+            padding: 14px 5%;
+            font-size: 13px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .breadcrumb a { color: var(--primary-purple); text-decoration: none; font-weight: 500; }
+        .breadcrumb-sep { color: #ccc; }
+
+        /* ===== SHARED ===== */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold-accent);
+            display: block;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 500;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        .section-title em { font-style: normal; color: var(--primary-purple); }
+
+        .section-title-center {
+            font-size: 36px;
+            font-weight: 500;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            padding-bottom: 1px;
+        }
+        .section-title-center::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 4px;
+            background-color: var(--teal-accent);
+        }
+        .section-title-center em { font-style: normal; color: var(--primary-purple); }
+
+        .teal-rule { width: 80px; height: 4px; background-color: var(--teal-accent); margin-bottom: 30px; }
+
+        /* ===== VERSE BANNER ===== */
+        .verse-banner {
+            background: var(--black-bg);
+            padding: 70px 5%;
+            text-align: center;
+        }
+
+        .verse-banner blockquote {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 500;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+            max-width: 760px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+        }
+
+        .verse-banner cite {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-accent);
+        }
+
+        .verse-divider {
+            display: flex; align-items: center; justify-content: center;
+            gap: 18px; margin-bottom: 40px;
+        }
+        .verse-divider-line { width: 60px; height: 1px; background: rgba(197,160,89,0.4); }
+        .verse-divider-diamond { width: 8px; height: 8px; background: var(--gold-accent); transform: rotate(45deg); }
+
+        /* ===== GIVING OPTIONS ===== */
+        .giving-section {
+            padding: 100px 5%;
+            background: var(--light-gray);
+        }
+
+        .giving-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: end;
+            margin-bottom: 70px;
+        }
+
+        .giving-header-right p { font-size: 16px; font-weight: 400; color: #555; line-height: 1.8; }
+
+        .giving-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .giving-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 44px 36px;
+            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .giving-card.featured {
+            background: var(--black-bg);
+            border-color: var(--gold-accent);
+        }
+
+        .giving-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: var(--teal-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .giving-card.featured::before { background: var(--gold-accent); transform: scaleX(1); }
+        .giving-card:hover::before { transform: scaleX(1); }
+        .giving-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.1); }
+        .giving-card.featured:hover { box-shadow: 0 24px 60px rgba(197,160,89,0.15); }
+
+        .featured-badge {
+            position: absolute; top: 20px; right: 20px;
+            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; background: var(--gold-accent);
+            color: #0a0a0a; padding: 4px 10px; border-radius: 100px;
+        }
+
+        .giving-card-icon {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 24px;
+        }
+        .icon-on-dark { background: rgba(197,160,89,0.15); }
+        .icon-light   { background: rgba(108,92,231,0.08); }
+        .icon-teal-bg { background: rgba(0,168,150,0.08); }
+
+        .giving-card-name {
+            font-size: 11px; font-weight: 700; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--gold-accent); margin-bottom: 12px;
+        }
+
+        .giving-card-title { font-size: 22px; font-weight: 600; margin-bottom: 14px; line-height: 1.3; }
+        .giving-card .giving-card-title { color: #1a1a1a; }
+        .giving-card.featured .giving-card-title { color: var(--white); }
+
+        .giving-card-desc { font-size: 15px; font-weight: 400; line-height: 1.8; margin-bottom: 30px; }
+        .giving-card .giving-card-desc { color: #555; }
+        .giving-card.featured .giving-card-desc { color: rgba(255,255,255,0.65); }
+
+        .giving-card-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 14px; font-weight: 600; text-decoration: none;
+            transition: 0.3s; border: none; background: none; cursor: pointer;
+            font-family: 'Montserrat', sans-serif; padding: 0;
+        }
+        .giving-card .giving-card-btn { color: var(--primary-purple); }
+        .giving-card.featured .giving-card-btn { color: var(--gold-accent); }
+        .giving-card-btn:hover { gap: 14px; }
+
+        /* ===== GIVE FORM SECTION ===== */
+        .give-form-section {
+            padding: 100px 5%;
+            background: var(--white);
+        }
+
+        .give-form-inner {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .give-form-wrapper {
+            background: var(--light-gray);
+            border-radius: 8px;
+            padding: 60px 50px;
+            border: 1px solid #eee;
+        }
+
+        .amount-toggle {
+            display: flex; background: #e9e9e9; border-radius: 6px;
+            padding: 4px; margin-bottom: 36px; width: fit-content;
+        }
+
+        .toggle-btn {
+            padding: 10px 28px; border: none; background: transparent;
+            border-radius: 4px; font-family: 'Montserrat', sans-serif;
+            font-size: 14px; font-weight: 600; color: #888; cursor: pointer; transition: all 0.3s;
+        }
+        .toggle-btn.active { background: #ffffff; color: var(--primary-purple); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+        .amount-label { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 14px; }
+
+        .amount-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 20px;
+        }
+
+        .amount-chip {
+            padding: 14px 10px; border: 1px solid #ddd; border-radius: 6px;
+            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 600;
+            color: #555; background: #fff; cursor: pointer; transition: all 0.25s; text-align: center;
+        }
+        .amount-chip:hover { border-color: var(--primary-purple); color: var(--primary-purple); background: rgba(108,92,231,0.04); }
+        .amount-chip.selected { background: var(--primary-purple); color: white; border-color: var(--primary-purple); }
+
+        .custom-amount-wrap { position: relative; margin-bottom: 30px; }
+
+        .currency-symbol {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            font-size: 16px; font-weight: 600; color: #888;
+        }
+
+        .custom-amount-input {
+            width: 100%; padding: 14px 18px 14px 36px; border: 1px solid #ddd;
+            border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 16px;
+            font-weight: 600; color: #1a1a1a; background: #fff; outline: none; transition: 0.3s;
+        }
+        .custom-amount-input:focus { border-color: var(--primary-purple); box-shadow: 0 0 0 3px rgba(108,92,231,0.08); }
+        .custom-amount-input::placeholder { color: #bbb; font-weight: 400; }
+
+        .fund-selector { margin-bottom: 30px; }
+        .fund-options { display: flex; flex-direction: column; gap: 10px; }
+
+        .fund-option {
+            display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+            border: 1px solid #ddd; border-radius: 6px; cursor: pointer;
+            transition: 0.25s; background: #fff;
+        }
+        .fund-option:hover { border-color: var(--primary-purple); background: rgba(108,92,231,0.03); }
+        .fund-option.selected { border-color: var(--primary-purple); background: rgba(108,92,231,0.05); }
+
+        .fund-radio {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ccc;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.25s;
+        }
+        .fund-option.selected .fund-radio { border-color: var(--primary-purple); }
+
+        .fund-radio-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary-purple); opacity: 0; transition: 0.2s; }
+        .fund-option.selected .fund-radio-dot { opacity: 1; }
+
+        .fund-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+        .fund-desc { font-size: 13px; font-weight: 400; color: #888; margin-top: 2px; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+        .form-group label span { color: var(--gold-accent); margin-left: 2px; }
+
+        .form-control {
+            width: 100%; padding: 14px 18px; border: 1px solid #ddd; border-radius: 4px;
+            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 400;
+            color: #1a1a1a; background: #fff; transition: all 0.3s; outline: none;
+        }
+        .form-control:focus { border-color: var(--primary-purple); box-shadow: 0 0 0 3px rgba(108,92,231,0.08); }
+        .form-control::placeholder { color: #aaa; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+        .form-divider {
+            font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            color: #888; margin: 28px 0 20px; display: flex; align-items: center; gap: 14px;
+        }
+        .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        .btn-give-submit {
+            width: 100%; background: var(--teal-accent); color: white; padding: 18px 40px;
+            border: none; border-radius: 4px; font-family: 'Montserrat', sans-serif;
+            font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px;
+        }
+        .btn-give-submit:hover { background: var(--teal-dark); transform: scale(1.02); }
+
+        .give-secure-note {
+            text-align: center; font-size: 12px; font-weight: 400; color: #aaa;
+            margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .give-sidebar { display: flex; flex-direction: column; gap: 28px; }
+
+        .sidebar-card {
+            background: var(--light-gray); border-radius: 8px;
+            padding: 36px 32px; border: 1px solid #eee; transition: box-shadow 0.3s;
+        }
+        .sidebar-card:hover { box-shadow: 0 12px 40px rgba(108,92,231,0.07); }
+
+        .sidebar-card-dark { background: var(--black-bg); border: 1px solid rgba(197,160,89,0.2); }
+
+        .sidebar-card-title {
+            font-size: 16px; font-weight: 600; color: #1a1a1a;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-card-dark .sidebar-card-title { color: var(--white); }
+
+        .sidebar-card-body { font-size: 15px; font-weight: 400; color: #555; line-height: 1.8; }
+        .sidebar-card-dark .sidebar-card-body { color: rgba(255,255,255,0.65); }
+
+        .bank-row {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 16px;
+        }
+        .bank-row:last-child { border-bottom: none; }
+        .bank-key { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+        .bank-val { font-size: 14px; font-weight: 600; color: var(--gold-accent); text-align: right; }
+
+        .impact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+        .impact-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; font-weight: 400; color: #555; line-height: 1.6; }
+        .impact-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-accent); flex-shrink: 0; margin-top: 6px; }
+
+        /* ===== HOW WE USE YOUR GIFT ===== */
+        .transparency-section {
+            padding: 100px 5%;
+            background: var(--f8f8f8);
+        }
+
+        .transparency-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .transparency-title {
+            font-size: 36px; font-weight: 500; color: var(--black-bg);
+            text-align: center; margin-bottom: 20px; line-height: 1.2;
+        }
+        .transparency-title em { font-style: normal; color: var(--gold-accent); }
+
+        .trans-rule { width: 80px; height: 4px; background: var(--teal-accent); margin: 0 auto 28px; }
+
+        .transparency-header p {
+            font-size: 16px; color: rgba(8, 8, 8, 0.6);
+            max-width: 540px; margin: 0 auto; line-height: 1.8;
+        }
+
+        .breakdown-bars {
+            max-width: 700px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 28px;
+        }
+
+        .breakdown-bar-top {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 10px;
+        }
+        .breakdown-bar-label { font-size: 15px; font-weight: 600; color: rgba(0, 0, 0, 0.85); }
+        .breakdown-bar-pct   { font-size: 15px; font-weight: 700; color: var(--gold-accent); }
+
+        .breakdown-bar-track {
+            height: 8px; background: rgba(255,255,255,0.06);
+            border-radius: 100px; overflow: hidden;
+        }
+
+        .breakdown-bar-fill {
+            height: 100%; border-radius: 100px;
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 1.2s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+        .breakdown-bar-fill.is-visible { transform: scaleX(1); }
+
+        .bar-ministry { background: var(--gold-accent); }
+        .bar-outreach { background: var(--teal-accent); }
+        .bar-media    { background: var(--primary-purple); }
+        .bar-ops      { background: rgba(255,255,255,0.3); }
+
+        /* ===== IMPACT STATS ===== */
+        .impact-section { padding: 100px 5%; background: var(--light-gray); }
+
+        .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+        .impact-stat-card {
+            background: #ffffff; border-radius: 8px; padding: 40px 30px;
+            text-align: center; border: 1px solid #eee; position: relative;
+            overflow: hidden; transition: all 0.4s ease;
+        }
+        .impact-stat-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 3px; background: var(--gold-accent);
+        }
+        .impact-stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+
+        .impact-number { font-size: 48px; font-weight: 800; color: var(--primary-purple); line-height: 1; margin-bottom: 10px; letter-spacing: -2px; }
+        .impact-unit   { font-size: 24px; font-weight: 800; color: var(--gold-accent); }
+        .impact-label  { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+        .impact-sub    { font-size: 13px; font-weight: 400; color: #888; line-height: 1.5; }
+
+        /* ===== PARTNER SECTION ===== */
+        .partner-section { padding: 100px 5%; background: var(--white); }
+
+        .partner-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+        .partner-text p { font-size: 16px; font-weight: 400; color: #444; line-height: 1.8; margin-bottom: 20px; }
+
+        .partner-perks { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+
+        .perk-row {
+            display: flex; align-items: flex-start; gap: 16px; padding: 18px 20px;
+            background: var(--light-gray); border-radius: 6px; border: 1px solid #eee; transition: 0.3s;
+        }
+        .perk-row:hover { border-color: var(--primary-purple); background: rgba(108,92,231,0.03); }
+
+        .perk-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: rgba(108,92,231,0.08); }
+        .perk-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+        .perk-desc  { font-size: 13px; font-weight: 400; color: #888; line-height: 1.6; }
+
+        .partner-image-side {
+            background: var(--black-bg); border-radius: 8px; padding: 60px 40px;
+            text-align: center; border: 1px solid rgba(197,160,89,0.15);
+            position: relative; overflow: hidden;
+        }
+        .partner-image-side::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--primary-purple));
+        }
+
+        .partner-quote { font-size: 20px; font-weight: 500; font-style: italic; color: rgba(255,255,255,0.9); line-height: 1.7; margin-bottom: 30px; }
+        .partner-quote em { font-style: normal; color: var(--gold-accent); }
+        .partner-verse-cite { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 40px; display: block; }
+
+        .partner-cta {
+            display: inline-block; background: var(--gold-accent); color: #0a0a0a;
+            padding: 14px 36px; border-radius: 4px; font-size: 15px; font-weight: 700;
+            text-decoration: none; transition: 0.3s;
+        }
+        .partner-cta:hover { background: var(--gold-dark); transform: scale(1.04); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--black-bg); color: #888;
+            padding: 60px 10% 20px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 40px; font-size: 14px;
+        }
+        footer h4 { color: var(--white); margin-bottom: 20px; font-weight: 600; }
+        .footer-links { list-style: none; line-height: 2.5; }
+        .sub-group { display: flex; margin-top: 15px; }
+        .sub-group input { padding: 10px; border: 1px solid #333; background: #111; color: white; width: 70%; font-family: 'Montserrat', sans-serif; }
+        .sub-group button { background: #333; color: white; border: none; padding: 0 15px; cursor: pointer; font-family: 'Montserrat', sans-serif; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .giving-cards, .impact-grid { grid-template-columns: 1fr 1fr; }
+            .give-form-inner, .partner-inner, .giving-header { grid-template-columns: 1fr; }
+            footer { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .giving-cards, .impact-grid { grid-template-columns: 1fr; }
+            footer { grid-template-columns: 1fr; }
+            .amount-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-main">
+
+            <ul class="header-nav-left">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about_us.html">About</a></li>
+                <li><a href="contact_us.html">Contact</a></li>
+            </ul>
+
+            <div class="header-logo-center">
+                <div class="header-logo-emblem"></div>
+                <span class="header-logo-name">Kingdom Bearers Global</span>
+            </div>
+
+            <ul class="header-nav-right">
+                <li><a href="give.html" class="active">Give</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="event.html">Events</a></li>
+                <li>
+                    <a href="store.html" style="padding-right:0;">
+                        <div class="header-icon-btn" style="display:inline-flex;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Give</span>
+    </div>
+
+    <!-- ===== GIVING OPTIONS ===== -->
+    <section class="giving-section">
+        <div class="giving-header">
+            <div class="reveal-left">
+                <span class="section-label">Ways to Give</span>
+                <h2 class="section-title">Choose How You <em>Want to Sow</em></h2>
+                <div class="teal-rule"></div>
+            </div>
+            <div class="giving-header-right reveal-right">
+                <p>Whether it's a one-time gift, a monthly partnership, or a legacy pledge — every act of generosity matters in the Kingdom of God. Pick the giving path that's right for you.</p>
+            </div>
+        </div>
+
+        <div class="giving-cards">
+            <div class="giving-card reveal-up" style="transition-delay:0s">
+                <div class="giving-card-icon icon-light">🙌</div>
+                <span class="giving-card-name">One-Time Gift</span>
+                <h3 class="giving-card-title">Give as God Leads</h3>
+                <p class="giving-card-desc">A single, spontaneous act of generosity. Give what God has placed on your heart, no strings attached.</p>
+                <a href="#give-form" class="giving-card-btn">
+                    Give Once
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <div class="giving-card featured reveal-up" style="transition-delay:0.1s">
+                <span class="featured-badge">⭐ Popular</span>
+                <div class="giving-card-icon icon-on-dark">🌱</div>
+                <span class="giving-card-name">Monthly Partner</span>
+                <h3 class="giving-card-title">Become a Kingdom Partner</h3>
+                <p class="giving-card-desc">Commit to sowing a seed every month. Partners sustain our daily broadcasts, outreach, and discipleship programmes.</p>
+                <a href="#give-form" class="giving-card-btn">
+                    Start Partnering
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <div class="giving-card reveal-up" style="transition-delay:0.2s">
+                <div class="giving-card-icon icon-teal-bg">🏦</div>
+                <span class="giving-card-name">Bank Transfer</span>
+                <h3 class="giving-card-title">Give via Direct Transfer</h3>
+                <p class="giving-card-desc">Prefer to give directly? Use our bank details to transfer your gift and send us a confirmation email afterwards.</p>
+                <a href="#bank-details" class="giving-card-btn">
+                    See Bank Details
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GIVE FORM ===== -->
+    <section class="give-form-section" id="give-form">
+        <div class="give-form-inner">
+
+            <!-- FORM -->
+            <div class="give-form-wrapper reveal-left">
+                <span class="section-label">Make a Donation</span>
+                <h2 class="section-title" style="margin-bottom:30px;">Your <em>Generous Gift</em></h2>
+
+                <div class="amount-toggle">
+                    <button class="toggle-btn active" onclick="setToggle(this)">One-Time</button>
+                    <button class="toggle-btn" onclick="setToggle(this)">Monthly</button>
+                </div>
+
+                <p class="amount-label">Select Amount (GHS)</p>
+                <div class="amount-grid">
+                    <button class="amount-chip" onclick="selectAmount(this)">GHS 20</button>
+                    <button class="amount-chip selected" onclick="selectAmount(this)">GHS 50</button>
+                    <button class="amount-chip" onclick="selectAmount(this)">GHS 100</button>
+                    <button class="amount-chip" onclick="selectAmount(this)">GHS 200</button>
+                    <button class="amount-chip" onclick="selectAmount(this)">GHS 500</button>
+                    <button class="amount-chip" onclick="selectAmount(this)">GHS 1000</button>
+                </div>
+
+                <div class="custom-amount-wrap">
+                    <span class="currency-symbol">₵</span>
+                    <input type="number" class="custom-amount-input" placeholder="Or enter a custom amount…" min="1">
+                </div>
+
+                <div class="fund-selector">
+                    <p class="amount-label" style="margin-bottom:14px;">Designate Your Gift</p>
+                    <div class="fund-options">
+                        <div class="fund-option selected" onclick="selectFund(this)">
+                            <div class="fund-radio"><div class="fund-radio-dot"></div></div>
+                            <div class="fund-info">
+                                <div class="fund-name">General Ministry Fund</div>
+                                <div class="fund-desc">Where it's needed most</div>
+                            </div>
+                        </div>
+                        <div class="fund-option" onclick="selectFund(this)">
+                            <div class="fund-radio"><div class="fund-radio-dot"></div></div>
+                            <div class="fund-info">
+                                <div class="fund-name">Media &amp; Broadcast</div>
+                                <div class="fund-desc">Reach more lives through our daily podcast</div>
+                            </div>
+                        </div>
+                        <div class="fund-option" onclick="selectFund(this)">
+                            <div class="fund-radio"><div class="fund-radio-dot"></div></div>
+                            <div class="fund-info">
+                                <div class="fund-name">Outreach &amp; Community</div>
+                                <div class="fund-desc">Support local missions and welfare</div>
+                            </div>
+                        </div>
+                        <div class="fund-option" onclick="selectFund(this)">
+                            <div class="fund-radio"><div class="fund-radio-dot"></div></div>
+                            <div class="fund-info">
+                                <div class="fund-name">Building Fund</div>
+                                <div class="fund-desc">Help us build and expand our facilities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider">Your Details</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name <span>*</span></label>
+                        <input type="text" class="form-control" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span>*</span></label>
+                        <input type="text" class="form-control" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address <span>*</span></label>
+                    <input type="email" class="form-control" placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" class="form-control" placeholder="+233 000 000 000">
+                </div>
+
+                <div class="form-group">
+                    <label>Note to the Church (optional)</label>
+                    <input type="text" class="form-control" placeholder="e.g. In thanksgiving for healing…">
+                </div>
+
+                <button class="btn-give-submit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    Give Now
+                </button>
+                <p class="give-secure-note">🔒 Secure &amp; Encrypted — Your information is always safe</p>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="give-sidebar reveal-right">
+
+                <div class="sidebar-card sidebar-card-dark" id="bank-details">
+                    <h3 class="sidebar-card-title">🏦 Bank Transfer Details</h3>
+                    <div class="bank-row">
+                        <span class="bank-key">Bank</span>
+                        <span class="bank-val">GCB Bank Ghana</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-key">Account Name</span>
+                        <span class="bank-val">Kingdom Bearers Global</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-key">Account No.</span>
+                        <span class="bank-val">0000000000</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-key">Branch</span>
+                        <span class="bank-val">Accra Main</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-key">Swift/Sort</span>
+                        <span class="bank-val">GHCBGHAC</span>
+                    </div>
+                    <p style="font-size:12px; color:rgba(255,255,255,0.3); margin-top:18px; line-height:1.7;">After transferring, please email us at <span style="color:var(--gold-accent);">give@kingdombearer.com</span> with your name and proof of payment.</p>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-card-title" style="font-size:15px;">📱 Mobile Money</h3>
+                    <p class="sidebar-card-body" style="font-size:14px; margin-bottom:14px;">Send to our registered MoMo number:</p>
+                    <p style="font-size:24px; font-weight:800; color:var(--primary-purple); letter-spacing:-0.5px;">+233 000 000 000</p>
+                    <p style="font-size:12px; color:#aaa; margin-top:8px;">Registered under: Kingdom Bearers Global</p>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-card-title" style="font-size:15px;">✨ Your Gift Makes an Impact</h3>
+                    <ul class="impact-list">
+                        <li><div class="impact-dot"></div>GHS 20 provides study materials for a new believer</li>
+                        <li><div class="impact-dot"></div>GHS 100 sponsors one hour of broadcast ministry</li>
+                        <li><div class="impact-dot"></div>GHS 500 funds an outreach event in a community</li>
+                        <li><div class="impact-dot"></div>GHS 1,000 sponsors a discipleship training session</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW WE USE YOUR GIFT (directly under donation form) ===== -->
+    <section class="giving-section">
+        <div class="transparency-header reveal-up">
+            <h2 class="transparency-title">How We <em>Use Your Gift</em></h2>
+            <div class="section-title"></div>
+            <p>We steward every gift with integrity and accountability. Here is how your donations are allocated across our ministry areas.</p>
+        </div>
+
+        <div class="breakdown-bars">
+            <div class="breakdown-bar-item reveal-up" style="transition-delay:0s">
+                <div class="breakdown-bar-top">
+                    <span class="breakdown-bar-label">Ministry &amp; Teaching</span>
+                    <span class="breakdown-bar-pct">50%</span>
+                </div>
+                <div class="breakdown-bar-track">
+                    <div class="breakdown-bar-fill bar-ministry" style="width:50%"></div>
+                </div>
+            </div>
+            <div class="breakdown-bar-item reveal-up" style="transition-delay:0.1s">
+                <div class="breakdown-bar-top">
+                    <span class="breakdown-bar-label">Community Outreach</span>
+                    <span class="breakdown-bar-pct">25%</span>
+                </div>
+                <div class="breakdown-bar-track">
+                    <div class="breakdown-bar-fill bar-outreach" style="width:25%"></div>
+                </div>
+            </div>
+            <div class="breakdown-bar-item reveal-up" style="transition-delay:0.2s">
+                <div class="breakdown-bar-top">
+                    <span class="breakdown-bar-label">Media &amp; Broadcast</span>
+                    <span class="breakdown-bar-pct">15%</span>
+                </div>
+                <div class="breakdown-bar-track">
+                    <div class="breakdown-bar-fill bar-media" style="width:15%"></div>
+                </div>
+            </div>
+            <div class="breakdown-bar-item reveal-up" style="transition-delay:0.3s">
+                <div class="breakdown-bar-top">
+                    <span class="breakdown-bar-label">Administration &amp; Operations</span>
+                    <span class="breakdown-bar-pct">10%</span>
+                </div>
+                <div class="breakdown-bar-track">
+                    <div class="breakdown-bar-fill bar-ops" style="width:10%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== IMPACT STATS ===== -->
+    <section class="impact-section" id="impact">
+        <h2 class="section-title-center reveal-up">The <em>Fruit</em> of Your Giving</h2>
+
+        <div class="impact-grid">
+            <div class="impact-stat-card reveal-up" style="transition-delay:0s">
+                <div class="impact-number">10<span class="impact-unit">K+</span></div>
+                <div class="impact-label">Lives Reached</div>
+                <div class="impact-sub">Through our broadcasts and outreach programmes</div>
+            </div>
+            <div class="impact-stat-card reveal-up" style="transition-delay:0.1s">
+                <div class="impact-number">12</div>
+                <div class="impact-label">Nations Impacted</div>
+                <div class="impact-sub">Listeners tuning in across Africa and beyond</div>
+            </div>
+            <div class="impact-stat-card reveal-up" style="transition-delay:0.2s">
+                <div class="impact-number">365</div>
+                <div class="impact-label">Days of Broadcast</div>
+                <div class="impact-sub">Daily podcasts aired every year without stopping</div>
+            </div>
+            <div class="impact-stat-card reveal-up" style="transition-delay:0.3s">
+                <div class="impact-number">8<span class="impact-unit">+</span></div>
+                <div class="impact-label">Years of Ministry</div>
+                <div class="impact-sub">Faithful service to God and community</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PARTNERSHIP ===== -->
+    <section class="partner-section">
+        <div class="partner-inner">
+            <div class="partner-text reveal-left">
+                <span class="section-label">Kingdom Partnership</span>
+                <h2 class="section-title">Become a <em>Monthly Partner</em></h2>
+                <div class="teal-rule"></div>
+                <p>Partners are the backbone of this ministry. By committing to a recurring gift, you ensure that the message of the Kingdom reaches millions — continuously, without interruption.</p>
+                <p>As a partner, you are not just giving — you are co-labouring with us in the harvest.</p>
+
+                <div class="partner-perks">
+                    <div class="perk-row">
+                        <div class="perk-icon">📧</div>
+                        <div class="perk-content">
+                            <div class="perk-title">Monthly Partner Newsletter</div>
+                            <div class="perk-desc">Exclusive updates, prayer points, and testimonies from the field</div>
+                        </div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon">🙏</div>
+                        <div class="perk-content">
+                            <div class="perk-title">Dedicated Prayer Coverage</div>
+                            <div class="perk-desc">Our prayer team prays specifically for you and your household monthly</div>
+                        </div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon">📖</div>
+                        <div class="perk-content">
+                            <div class="perk-title">Digital Resources</div>
+                            <div class="perk-desc">Access to exclusive teachings, devotionals, and study materials</div>
+                        </div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon">🎙️</div>
+                        <div class="perk-content">
+                            <div class="perk-title">Partner Recognition</div>
+                            <div class="perk-desc">Be acknowledged and celebrated in our community</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="partner-image-side reveal-right">
+                <p class="partner-quote">
+                    "And my God will meet <em>all your needs</em> according to the riches of his glory in Christ Jesus."
+                </p>
+                <p class="partner-verse-cite">— Philippians 4:19</p>
+                <a href="#give-form" class="partner-cta">Become a Partner Today</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div>
+            <h4>Kingdom Bearers Global</h4>
+            <p>Transforming lives through worship and service.</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+                <li>About Us</li><li>Shop Now</li><li>Contact Us</li><li>Give Now</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Stay Updated</h4>
+            <ul class="footer-links">
+                <li>Newsletter Signup</li><li>Latest News</li><li>New Arrivals</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Subscribe</h4>
+            <div class="sub-group">
+                <input type="email" placeholder="Email Address">
+                <button>Join</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---- Scroll Reveal ----
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-fade')
+            .forEach(el => observer.observe(el));
+
+        // ---- Breakdown bars ----
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.breakdown-bar-fill').forEach(bar => {
+                        bar.classList.add('is-visible');
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.breakdown-bars').forEach(el => barObserver.observe(el));
+
+        // ---- Amount chips ----
+        function selectAmount(btn) {
+            document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.querySelector('.custom-amount-input').value = '';
+        }
+
+        // ---- Fund options ----
+        function selectFund(el) {
+            document.querySelectorAll('.fund-option').forEach(f => f.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        // ---- Toggle one-time / monthly ----
+        function setToggle(btn) {
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>
